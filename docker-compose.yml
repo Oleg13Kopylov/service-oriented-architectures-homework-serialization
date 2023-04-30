@@ -1,0 +1,115 @@
+version: '3.8'
+
+services:
+
+  native:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: NATIVE
+
+
+  xml:
+    build: .
+    expose:
+     - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: XML
+
+
+  json:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: JSON
+
+  google_protocol_buffer:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: GOOGLE_PROTOCOL_BUFFER
+
+
+  apache_avro:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: APACHE_AVRO
+
+
+  yaml:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: YAML
+
+
+  message_pack:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    command: python worker.py
+    environment:
+      HOST: $HOST
+      UNICAST_PORT: $UNICAST_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+      FORMAT: MESSAGE_PACK
+
+
+  proxy:
+    build: .
+    expose:
+      - f"{$UNICAST_PORT}/udp"
+    ports:
+      - "2000:2000/udp"
+    command: python proxy.py
+    environment:
+      HOST: $HOST
+      WORKERS_PORT: $UNICAST_PORT
+      UNICAST_PORT: $PROXY_PORT
+      MULTICAST_IP: $MULTICAST_IP
+      MULTICAST_PORT: $MULTICAST_PORT
+    depends_on:
+      - native
+      - xml
+      - json
+      - google_protocol_buffer
+      - apache_avro
+      - yaml
+      - message_pack

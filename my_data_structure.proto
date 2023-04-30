@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message MyDataStructure {
+  bool bool = 1;
+  int32 int = 2;
+  float float = 3;
+  string string = 4;
+  repeated string list_of_strings = 5;
+  repeated int32 list_of_ints = 6;
+  map<string, int32> word_to_int = 7;
+}
